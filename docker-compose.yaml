@@ -1,0 +1,39 @@
+services:
+  # First Node.js container
+  node_app_v1:
+    # build: ./app ## use this when building locally
+    image: piyushthaware07/node-app:v1
+    container_name: node-app-v1
+    ports:
+      - "8001:3000"
+    environment:
+      DOCKER_IMAGE: v1
+    volumes:
+      # Mount the named volume to /my-app/data
+      - node-app-data:/my-app/data
+    networks:
+      - node-app-network
+
+  # Second Node.js container
+  node_app_v2:
+    # build: ./app ## use this when building locally
+    image: piyushthaware07/node-app:v2
+    container_name: node-app-v2
+    ports:
+      - "8002:3000"
+    environment:
+      DOCKER_IMAGE: v2
+    volumes:
+      # Mount the same named volume
+      - node-app-data:/my-app/data
+    networks:
+      - node-app-network
+
+# Named volume
+volumes:
+  node-app-data:
+
+# Custom bridge network
+networks:
+  node-app-network:
+    driver: bridge
