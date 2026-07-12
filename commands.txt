@@ -100,6 +100,8 @@ docker system prune -a --> Remove all unused images (not just dangling), contain
 
 types of docker networks:
 1. Bridge Network --> Connects containers running on the same Docker host while keeping them isolated from the outside world unless ports are published. If we don't specify a network, containers are attached to this default bridge network.
+When Docker is installed, it automatically creates a default Bridge network. If you create a container without specifying a network, Docker connects it to this default Bridge network. Containers connected to the same Bridge network can communicate with each other. For the default Bridge network, communication is typically by IP address, whereas on a custom Bridge network, containers can communicate using their container names because Docker provides built-in DNS.
+
 2. Host Network --> Shares the host machine's network stack, so the container uses the host's IP address instead of getting its own.
 3. Overlay Network --> Connects containers running on different Docker hosts as if they were on the same network.
 4. None network --> Completely isolates the container with no internet, external, or container-to-container network access (only the loopback interface is available).
