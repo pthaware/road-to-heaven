@@ -103,6 +103,8 @@ types of docker networks:
 When Docker is installed, it automatically creates a default Bridge network. If you create a container without specifying a network, Docker connects it to this default Bridge network. Containers connected to the same Bridge network can communicate with each other. For the default Bridge network, communication is typically by IP address, whereas on a custom Bridge network, containers can communicate using their container names because Docker provides built-in DNS.
 
 2. Host Network --> Shares the host machine's network stack, so the container uses the host's IP address instead of getting its own.
+In a Host network, the container does not get its own IP address. Instead, it shares the host machine's network stack and uses the host's IP address. Since the container uses the host's network directly, there is no network isolation and no need for port mapping (-p).
+
 3. Overlay Network --> Connects containers running on different Docker hosts as if they were on the same network.
-4. None network --> Completely isolates the container with no internet, external, or container-to-container network access (only the loopback interface is available).
+4. None network --> Provides complete network isolation. The container has no internet access, cannot communicate with other containers, cannot be accessed by the host over the network, and cannot communicate with external networks.
 5. Macvlan Network --> Assigns each container its own IP and MAC address, making it appear as a separate physical device on the network.
