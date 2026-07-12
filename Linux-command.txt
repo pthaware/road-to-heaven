@@ -1,0 +1,500 @@
+1. pwd : The pwd (Print Working Directory) command shows the current working directory in Linux.
+pwd
+
+2. whoami : The whoami command displays the username of the currently logged-in user.
+whoami
+
+3. date : The date command is used to display or set the system date and time.
+date
+date "+%Y-%m-%d" --> (display the date in YYYY-MM-DD format)
+date "+%H:%M:%S" --> (display the time in HH:MM:SS format)
+
+4. ls : The ls (List) command is used to display all files and directories in the current working directory.
+ls
+ls -a --> (show all files, including hidden files)
+ls -l --> (display files in long listing format, including permissions, owner, group, size, date, and filename)
+ls -lh --> (display files in long listing format with human-readable file sizes)
+ls -t --> (sort files by modification time, newest first)
+ls -ltr --> (display files in long listing format sorted by modification time, oldest first)
+ls -u --> (sort files and directories by last access time)
+ls -c --> (sort files by last status change time)
+ls -S --> (sort files by size, largest first)
+
+5. cat : The cat (Concatenate) command is used to create, view, combine, and append the contents of files.
+cat filename --> (display the contents of a file)
+cat file1 file2 --> (display the contents of multiple files)
+cat > filename --> (create a new file or overwrite an existing file)
+cat >> filename --> (append content to an existing file)
+cat -n filename --> (display the contents of a file with line numbers)
+
+6. less : The less command is used to view the contents of a file one page at a time. It allows both forward and backward navigation.
+less filename --> (view the contents of a file page by page)
+less -N filename --> (display line numbers)
+
+7. more : The more command is used to view the contents of a file one page at a time. It supports forward navigation only.
+more filename --> (view the contents of a file page by page)
+
+8. touch : The touch command is used to create a new empty file or update the access and modification timestamps of an existing file.
+touch filename --> (create a new empty file)
+touch file1 file2 file3 --> (create multiple empty files)
+touch existing_file --> (update the access and modification timestamps of an existing file)
+touch -a filename --> (update only the access time)
+touch -m filename --> (update only the modification time)
+
+9. vi : The vi (Visual Editor) command is used to create, edit, and view text files in Linux.
+vi filename --> (create a new file if it does not exist, or open an existing file for editing)
+    /text --> (search forward for text)
+    n --> (go to the next search result)
+
+10. nano : The nano command is used to create, edit, and view text files in a simple, user-friendly text editor.
+nano filename --> (create a new file if it does not exist, or open an existing file for editing)
+
+11. mkdir : The mkdir (Make Directory) command is used to create one or more directories.
+mkdir directory_name --> (create a new directory)
+mkdir dir1 dir2 dir3 --> (create multiple directories)
+mkdir -p parent/child/grandchild --> (create parent and nested directories if they do not already exist)
+mkdir -p dir1/subdir1 dir2/subdir2 --> (create multiple nested directory structures)
+
+12. rmdir : The rmdir (Remove Directory) command is used to remove empty directories.
+rmdir directory_name --> (remove an empty directory)
+rmdir dir1 dir2 dir3 --> (remove multiple empty directories)
+rmdir -p parent/child/grandchild --> (remove the specified directory and its empty parent directories)
+
+13. rm : The rm (Remove) command is used to delete files and directories.
+rm filename --> (remove a file)
+rm file1 file2 file3 --> (remove multiple files)
+rm -f filename --> (forcefully remove a file without prompting)
+rm -r directory_name --> (remove a directory and its contents recursively)
+rm -rf directory_name --> (forcefully remove a directory and its contents recursively without prompting)
+rm *.txt --> (remove all .txt files in the current directory)
+
+14. cd : The cd (change directory) command is used to navigate between directories in the file system.
+cd directory_name --> (change to the specified directory)
+cd --> (change to the user's home directory)
+cd ~ --> (change to the user's home directory)
+cd .. --> (move to the parent directory)
+cd ../.. --> (move up two directory levels)
+cd - --> (switch to the previous working directory)
+cd / --> (change to the root directory)
+cd /path/to/directory --> (change to the specified absolute path)
+
+15. cp : The cp (Copy) command is used to copy files and directories from one location to another.
+cp source_file destination_file --> (copy a file)
+cp file1 file2 directory_name --> (copy multiple files to a directory)
+cp -r source_directory destination_directory --> (copy a directory and its contents recursively)
+cp -f source_file destination_file --> (forcefully overwrite the destination file)
+cp -p source_file destination_file --> (preserve the file's permissions, ownership, and timestamps)
+
+16. mv : The mv (Move) command is used to move or rename files and directories.
+mv source_file destination_file --> (move or rename a file)
+mv file1 file2 directory_name --> (move multiple files to a directory)
+mv source_directory destination_directory --> (move or rename a directory)
+mv -f source_file destination_file --> (forcefully overwrite the destination file without prompting)
+
+17. head : The head command is used to display the first part of a file. By default, it displays the first 10 lines.
+head filename --> (display the first 10 lines of a file)
+head -n 5 filename --> (display the first 5 lines of a file)
+head -5 filename --> (display the first 5 lines of a file)
+head file1 file2 --> (display the contents of multiple files with headers)
+
+18. tail : The tail command is used to display the last part of a file. By default, it displays the last 10 lines.
+tail filename --> (display the last 10 lines of a file)
+tail -n 5 filename --> (display the last 5 lines of a file)
+tail -5 filename --> (display the last 5 lines of a file)
+tail file1 file2 --> (display the contents of multiple files without file name headers)
+
+19. sort : The sort command is used to sort the contents of a file line by line.
+sort filename --> (sort the file in ascending alphabetical order)
+sort -r filename --> (sort the file in descending alphabetical order)
+sort -n filename --> (sort the file numerically)
+sort -u filename --> (sort the file and remove duplicate lines)
+sort -k 2 filename --> (sort the file based on the second column)
+
+20. split : The split command is used to split a large file into smaller files.
+split filename --> (split the file into smaller files of 1000 lines each)
+split -l 100 filename --> (split the file into files containing 100 lines each)
+split -b 10M filename --> (split the file into files of 10 MB each)
+split -n 4 filename --> (split the file into 4 equal-sized files)
+
+21. grep : The grep (Global Regular Expression Print) command is used to search for a specified pattern or text in files.
+grep "pattern" filename --> (search for the specified pattern in a file)
+grep -i "pattern" filename --> (perform a case-insensitive search)
+grep -n "pattern" filename --> (display matching lines along with their line numbers)
+grep -r "pattern" directory_name --> (search recursively in all files under the specified directory)
+grep -c "pattern" filename --> (display the number of matching lines)
+
+22. egrep : The egrep command is an extended version of grep. It allows searching using extended regular expressions (ERE), supporting multiple patterns, alternation, and more.
+egrep "pattern" filename --> (search for the specified pattern in a file)
+egrep "pattern1|pattern2" filename --> (search for either pattern1 or pattern2)
+egrep -i "pattern" filename --> (perform a case-insensitive search)
+egrep -n "pattern" filename --> (display matching lines along with their line numbers)
+egrep -c "pattern" filename --> (display the number of matching lines)
+
+23. shuf : The shuf command is used to shuffle lines of a file or generate random permutations of input.
+shuf filename --> (display all lines of the file in random order)
+shuf -n 1 filename --> (display one random line from the file)
+shuf -n 5 filename --> (display 5 random lines from the file)
+
+24. wc : The wc (Word Count) command is used to count the number of lines, words, characters, and bytes in a file.
+wc filename --> (display the number of lines, words, and bytes in a file)
+wc -l filename --> (display the number of lines in a file)
+wc -w filename --> (display the number of words in a file)
+wc -c filename --> (display the number of bytes in a file)
+wc -m filename --> (display the number of characters in a file)
+wc file1 file2 --> (display the counts for multiple files and the total count)
+
+25. cmp : The cmp (Compare) command is used to compare two files byte by byte.
+cmp file1 file2 --> (compare two files and display the first difference)
+
+26. diff : The diff (Difference) command is used to compare two files line by line and display the differences between them.
+diff file1 file2 --> (compare two files and display their differences)
+diff -r dir1 dir2 --> (compare two directories recursively)
+diff file1 file2 > differences.txt --> (save the differences to a file)
+
+27. find : The find command is used to search for files and directories based on name, type, size, permissions, ownership, and other criteria.
+find <apth> -type f -name "filename" --> (search for a regular file by its name)
+find <path> -type d -name "directory_name" --> (search for a directory by its name)
+find <path> -size +10M --> (find files larger than 10 MB)
+find <path> -user username --> (find files owned by the specified user)
+
+28. locate : The locate command is used to quickly search for files and directories by name using a prebuilt database.
+locate filename --> (search for files and directories with the specified name)
+locate "*.txt" --> (search for all .txt files)
+locate -n 10 filename --> (display only the first 10 matching results)
+updatedb --> (update the locate database)
+
+29. history : The history command is used to display the list of previously executed commands in the terminal.
+history --> (display the command history)
+history 10 --> (display the last 10 commands)
+
+30. help : The help command is used to display information about Bash built-in commands.
+help --> (display a list of all Bash built-in commands)
+help command_name --> (display help information for the specified built-in command)
+help cd --> (display help for the cd command)
+help history --> (display help for the history command)
+
+31. man : The man (Manual) command is used to display the user manual for Linux commands, programs, and system calls.
+man command_name --> (display the manual page for the specified command)
+man ls --> (display the manual page for the ls command)
+man grep --> (display the manual page for the grep command)
+
+32. which : The which command is used to locate the executable file of a command in the directories listed in the PATH environment variable.
+which command_name --> (display the path of the specified command)
+which ls --> (display the path of the ls command)
+which python3 --> (display the path of the python3 command)
+which grep --> (display the path of the grep executable)
+
+33. cal : The cal (Calendar) command is used to display a calendar in the terminal.
+cal --> (display the current month's calendar)
+cal 2026 --> (display the calendar for the year 2026)
+cal 6 2026 --> (display the calendar for June 2026)
+
+34. uptime : The uptime command is used to display the current time, how long the system has been running, the number of logged-in users, and the system load averages.
+uptime --> (display the current time, system uptime, logged-in users, and load averages)
+uptime -p --> (display the system uptime in a human-readable format)
+
+35. script : The script command is used to record all terminal input and output to a file.
+script filename --> (start recording the terminal session and save it to the specified file)
+exit --> (stop recording the terminal session)
+
+36. alias : The alias command is used to create, display, and manage shortcuts for frequently used commands.
+alias --> (display all defined aliases)
+alias name='command' --> (create a new alias)
+unalias name --> (remove the specified alias)
+
+37. zip : The zip command is used to compress one or more files and directories into a ZIP archive.
+zip archive.zip filename --> (compress a single file into a ZIP archive)
+zip archive.zip file1 file2 file3 --> (compress multiple files into a ZIP archive)
+zip -r archive.zip directory_name --> (compress a directory and its contents recursively)
+
+38. unzip : The unzip command is used to extract, list, and test the contents of ZIP archives.
+unzip archive.zip --> (extract all files from the ZIP archive)
+unzip -l archive.zip --> (list the contents of the ZIP archive without extracting)
+
+39. gzip : The gzip (GNU Zip) command is used to compress and decompress files using the GZIP compression format.
+Note: gzip compresses individual files only. To compress an entire directory, first create a tar archive (for example, tar -cvf archive.tar directory_name) and then compress it using gzip, or simply use tar -czvf archive.tar.gz directory_name.
+gzip filename --> (compress a file and replace it with a .gz file)
+gzip -d filename.gz --> (decompress a .gz file)
+gzip -k filename --> (compress a file and keep the original file)
+gzip -r directory_name --> (compress all files in the specified directory recursively)
+
+40. tar : The tar (tape archive) command is used to create, extract, and manage archive files. By default, it does NOT compress - compression is added using options like -z (gzip), -j (bzip2), or -J (xz).
+# -c → create archive
+# -z → compress using gzip
+# -v → verbose (show files being processed)
+# -f → specify filename
+# -x → extract
+tar -cvf archive.tar filename --> (create a tar archive)
+tar -cvf archive.tar file1 file2 file3 --> (create a tar archive containing multiple files)
+tar -cvf archive.tar directory_name --> (create a tar archive of a directory)
+tar -xvf archive.tar --> (extract a tar archive)
+tar -tvf archive.tar --> (list the contents of a tar archive)
+tar -czvf archive.tar.gz foldername --> (Create compressed archive (most common))
+tar -xzvf archive.tar.gz --> (Extract .tar.gz)
+
+41. wget : The wget (Web Get) command is used to download files from the internet using HTTP, HTTPS, or FTP protocols.
+wget URL --> (download a file from the specified URL)
+
+43. apt : The apt (Advanced Package Tool) command is used to install, update, upgrade, remove, and manage software packages on Debian-based Linux distributions such as Ubuntu.
+sudo apt update --> (update the package index)
+sudo apt upgrade --> (upgrade all installed packages to their latest versions)
+sudo apt install package_name --> (install the specified package)
+sudo apt remove package_name --> (remove the specified package while keeping its configuration files)
+sudo apt search package_name --> (search for a package)
+sudo apt show package_name --> (display detailed information about a package)
+sudo apt list --installed --> (list all installed packages)
+
+44. sudo : sudo command allows a normal user to run commands as the system administrator.
+sudo command --> (execute the specified command with superuser privileges)
+sudo apt update --> (update the package index with superuser privileges)
+
+45. systemctl : The systemctl command is used to manage and control system services and the systemd system manager.
+systemctl status service_name --> (display the status of the specified service)
+sudo systemctl start service_name --> (start the specified service)
+sudo systemctl stop service_name --> (stop the specified service)
+sudo systemctl restart service_name --> (restart the specified service)
+sudo systemctl enable service_name --> (enable the service to start automatically at boot)
+sudo systemctl disable service_name --> (disable the service from starting automatically at boot)
+sudo systemctl is-active service_name --> (check whether the service is currently running)
+journalctl -u service_name --> (display logs for the specified service)
+
+46. printenv : The printenv command is used to display environment variables and their values.
+printenv --> (display all environment variables)
+printenv VARIABLE_NAME --> (display the value of the specified environment variable)
+
+47. export : The export command is used to create or modify environment variables and make them available to child processes.
+export VARIABLE_NAME=value --> (create a new environment variable)
+export PATH=$PATH:/new/path --> (add a new directory to the PATH environment variable)
+export --> (display all exported environment variables)
+
+48. source : The source command is used to execute commands from a file in the current shell and apply changes immediately without restarting the terminal.
+source filename --> (execute the commands in the specified file)
+source ~/.bashrc --> (reload the Bash configuration file and apply changes in the current terminal)
+source script.sh --> (execute the commands in script.sh in the current shell)
+. filename --> (execute the commands in the specified file using the shorthand syntax)
+
+49. Group Management:
+    a. groupadd : The groupadd command is used to create a new group.
+    sudo groupadd group_name --> (create a new group)
+
+    b. groupdel : The groupdel command is used to delete an existing group.
+    sudo groupdel group_name --> (delete the specified group)
+
+    c. groupmod : The groupmod command is used to modify an existing group.
+    sudo groupmod -n new_group_name old_group_name --> (rename an existing group)
+
+50. User Management:
+    a. useradd : The useradd command is used to create a new user account.
+    sudo useradd username --> (create a new user)
+    sudo useradd -m username --> (create a new user with a home directory)
+
+    b. userdel : The userdel command is used to delete a user account.
+    sudo userdel username --> (delete the specified user)
+    sudo userdel -r username --> (delete the specified user and remove the home directory and mail spool)
+
+    c. usermod : The usermod command is used to modify an existing user account.
+    sudo usermod -aG group_name username --> (add the user to the specified group)
+
+    d. su : The su (Substitute User) command is used to switch to another user account or start a shell as another user.
+    su username --> (switch to the specified user)
+    su - --> (switch to the root user with a login shell)
+    su - username --> (switch to the specified user with a login shell)
+
+51. getent : The getent command is used to retrieve entries from system databases such as users, groups, hosts, and services.
+getent passwd --> (display all user accounts)
+getent passwd username --> (display information about the specified user)
+getent group --> (display all groups)
+getent group group_name --> (display information about the specified group,including its members) 
+id username --> (check whether the specified user belongs to a particular group)
+groups username --> (display all groups the specified user belongs to)
+
+52. ssh : The ssh (Secure Shell) command is used to securely connect to and manage a remote system over a network.
+ssh username@hostname --> (connect to a remote system)
+ssh username@IP_address --> (connect to a remote system using its IP address)
+ssh -i private_key.pem username@hostname --> (connect using the specified private key)
+ssh -p 2222 username@hostname --> (connect to a remote system using the specified port)
+ssh -v username@hostname --> (display detailed connection debugging information)
+
+53. scp : The scp (Secure Copy) command is used to securely copy files and directories between local and remote systems over SSH.
+scp source_file username@hostname:/remote/path --> (copy a local file to a remote system)
+scp -r local_directory username@hostname:/remote/path --> (copy a local directory and its contents recursively to a remote system)
+scp -P 2222 source_file username@hostname:/remote/path --> (connect using the specified SSH port)
+scp -i private_key.pem source_file username@hostname:/remote/path --> (use the specified private key for authentication)
+scp -v source_file username@hostname:/remote/path --> (display detailed transfer and connection information)
+
+54. File Management:
+Each file has three types of permissions: read (r), write (w), execute (x) and And three classes of users: owner (u), group (g), others (o)
+    a. chmod : The chmod (Change Mode) command is used to change the permissions of files and directories.
+    chmod +x filename --> (add execute permission for all users)
+    chmod -x filename --> (remove execute permission for all users)
+    chmod +r filename --> (add read permission for all users)
+    chmod -r filename --> (remove read permission for all users)
+    chmod +w filename --> (add write permission for all users)
+    chmod -w filename --> (remove write permission for all users)
+    chmod u+x filename --> (add execute permission for the file owner)
+    chmod g+w filename --> (add write permission for the group)
+    chmod o-r filename --> (remove read permission for others)
+    chmod 644 filename --> (set permissions to rw-r--r--)
+    chmod 755 filename --> (set permissions to rwxr-xr-x)
+
+    b. chown : The chown (Change Owner) command is used to change the ownership of files and directories.
+    chown username filename --> (change the owner of a file)
+    chown username:group_name filename --> (change both the owner and group of a file)
+    chown -R username directory_name --> (recursively change the owner of a directory and its contents)
+    chown -R username:group_name directory_name --> (recursively change the owner and group of a directory and its contents)
+
+55. Memory Management:
+    a. free : The free command is used to display information about system memory usage, including RAM and swap space.
+    free --> (display memory usage in KB)
+    free -h --> (display memory usage in a human-readable format)
+    free -s 5 --> (refresh the memory usage every 5 seconds)
+
+    b. top : The top command is used to display real-time information about running processes, CPU usage, and memory usage.
+    top --> (display running processes and system resource usage)
+    top -u username --> (display processes owned by the specified user)
+    top -p PID --> (monitor the specified process)
+    top -d 5 --> (refresh the display every 5 seconds)
+
+    c. htop : The htop command is used to interactively monitor system processes, CPU usage, memory usage, and swap usage.
+    htop --> (display an interactive process viewer)
+    htop -u username --> (display processes owned by the specified user)
+    htop -p PID --> (monitor the specified process)
+    htop -d 10 --> (set the refresh delay to 1 second)
+
+    d. ps : The ps (Process Status) command is used to display information about running processes.
+    ps --> (display processes running in the current shell)
+    ps -e --> (display all running processes)
+    ps aux --> (display detailed information about all running processes)
+    ps -u username --> (display processes owned by the specified user)
+    ps -p PID --> (display information about the specified process)
+
+    e. df : The df (Disk Free) command is used to display information about filesystem disk space usage.
+    df → Displays free and used disk space of entire filesystems (partitions).
+    df --> (display disk space usage for all mounted filesystems)
+    df -h --> (display disk space usage in a human-readable format)
+
+    f. du : The du (Disk Usage) command is used to estimate the disk space used by files and directories.
+    du → Displays the disk space used by specific files and directories.
+    du --> (display the disk usage of the current directory)
+    du -h --> (display disk usage in a human-readable format)
+
+56. System Management:
+    a. uname : The uname (Unix Name) command is used to display system and kernel information.
+    uname --> (display the operating system name)
+    uname -a --> (display all system information)
+    uname -r --> (display the kernel release version)
+    uname -m --> (display the system architecture)
+    uname -n --> (display the system hostname)
+    uname -s --> (display the operating system name)
+
+    b. arch : The arch command is used to display the system's CPU architecture.
+    arch --> (display the system architecture)
+
+    c. lscpu : The lscpu command is used to display detailed CPU architecture information.
+    lscpu --> (display detailed CPU information)
+
+    d. lsblk : The lsblk (List Block Devices) command is used to display information about block storage devices such as hard disks, SSDs, and partitions & there mount points
+    lsblk --> (display all block devices)
+
+57. Network Management:
+    a. ip : The ip command is used to display and configure network interfaces, IP addresses, routes, and other network settings.
+    ip addr --> (display all network interfaces and IP addresses)
+    ip addr show eth0 --> (display information for the specified network interface)
+    ip route --> (display the routing table)
+
+    b. ping : The ping command is used to test network connectivity between two hosts.
+    ping google.com --> (test connectivity to the specified host)
+    ping -i 2 google.com --> (send requests every 2 seconds)
+
+    c. traceroute : The traceroute command is used to display the path that packets take to reach a destination.
+    traceroute google.com --> (display the route to the specified host)
+    traceroute -m 10 google.com --> (limit the maximum number of hops to 10)
+    traceroute -n google.com --> (display numeric IP addresses instead of hostnames)
+
+    d. curl : curl is a command-line tool used to send or receive data from the internet.
+    curl URL --> (download and display the contents of the specified URL)
+    curl -o filename URL --> (download a file and save it with the specified filename)
+    curl -I URL --> (display only the HTTP response headers)
+    curl -L URL --> (follow HTTP redirects)
+    curl -X GET URL --> (send an HTTP GET request)
+    curl -X POST -d "key=value" URL --> (send an HTTP POST request with form data)
+
+    e. hostname : The hostname command is used to display or set the system's hostname.
+    hostname --> (display the current hostname)
+    hostname -I --> (display all IP addresses assigned to the system)
+    hostname -i --> (display the primary IP address)
+
+    f. netstat : The netstat command is used to display network connections, routing tables, interface statistics, and listening ports.
+    netstat -tuln --> (display all listening TCP and UDP ports)
+    netstat -rn --> (display the routing table)
+    netstat -i --> (display network interface statistics)
+    netstat -s --> (display network protocol statistics)
+
+    g. ss : The ss (Socket Statistics) command is used to display network sockets and connections.
+    ss --> (display all sockets)
+    ss -t --> (display TCP connections)
+    ss -u --> (display UDP connections)
+    ss -tuln --> (display all listening TCP and UDP ports with numeric addresses)
+    ss -p --> (display the process using each socket)
+    ss -s --> (display a summary of socket statistics)
+
+    h. nslookup : The nslookup command is used to query DNS servers and resolve domain names.
+    nslookup google.com --> (display the IP address of the specified domain)
+    nslookup 8.8.8.8 --> (perform a reverse DNS lookup)
+    nslookup google.com 8.8.8.8 --> (query the specified DNS server)
+
+    i. dig : The dig (Domain Information Groper) command is used to query DNS servers for domain information.
+    dig google.com --> (query DNS records for the specified domain)
+    dig google.com +short --> (display only the IP address)
+
+    j. ifconfig : The ifconfig (Interface Configuration) command is used to display and configure network interfaces. It is deprecated and has largely been replaced by the `ip` command.
+    ifconfig --> (display all active network interfaces)
+
+    k. telnet : The telnet command is used to connect to a remote host or test TCP port connectivity. It is an unencrypted protocol and should not be used for remote administration.
+    telnet hostname --> (connect to the specified remote host)
+    telnet hostname 80 --> (connect to port 80 on the specified host)
+    telnet hostname 443 --> (test connectivity to port 443)
+
+58. Automation Management:
+    a. at : The at command is used to schedule a command or script to run once at a specified date and time.
+    echo "backup.sh" | at 11:00 PM --> (schedule the backup.sh script to run at 11:00 PM)
+    at now + 30 minutes --> (schedule a command to run 30 minutes from now)
+    atq --> (display all pending at jobs)
+
+    b. crontab : The crontab (Cron Table) command is used to schedule commands or scripts to run automatically at specified intervals.
+
+    * * * * * command_to_execute
+    │ │ │ │ │
+    │ │ │ │ └── Day of Week (0-7) (Sunday = 0 or 7)
+    │ │ │ └──── Month (1-12)
+    │ │ └────── Day of Month (1-31)
+    │ └──────── Hour (0-23)
+    └────────── Minute (0-59)
+
+    crontab -e --> (create or edit the current user's cron jobs)
+    crontab -l --> (display the current user's cron jobs)
+    crontab -r --> (remove all cron jobs for the current user)
+    crontab -u username -l --> (display the cron jobs of the specified user)
+    sudo crontab -u username -e --> (edit the cron jobs of the specified user)
+
+59. kill : The kill command is used to send signals to a process, typically to terminate, stop, or continue its execution.
+kill PID --> (send the default SIGTERM signal to terminate the specified process)
+kill -9 PID --> (forcefully terminate the specified process using SIGKILL)
+
+60. Input and Output Redirection : Linux provides input and output redirection operators to control where command input comes from and where output is sent.
+command > file --> (redirect standard output to a file, overwriting the file if it exists)
+command >> file --> (append standard output to the end of a file)
+command < file --> (use a file as standard input for a command) , ex - sort < sample.txt
+command1 | command2 --> (send the output of command1 as the input to command2)
+command > success.log 2> error.log --> (redirect successful output and error output to separate files)
+command >> success.log 2>> error.log --> (append successful output and error output to separate files)
+command > /dev/null --> (discard successful output)
+command 2> /dev/null --> (discard error output)
+command > /dev/null 2>&1 --> (discard both successful output and error output)
+command &> output.log --> (redirect both successful output and error output to the same file)
+
+61. lsof : The lsof (List Open Files) command is used to display information about open files and the processes using them.
+lsof --> (display all open files)
+lsof filename --> (display the processes using the specified file)
+lsof -p PID --> (display all files opened by the specified process)
+lsof -i :8080 --> (display the process using port 8080)
