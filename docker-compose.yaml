@@ -19,8 +19,8 @@ services:
     # build: ./app ## use this when building locally
     image: piyushthaware07/node-app:v2
     container_name: node-app-v2
-    ports:
-      - "8002:3000"
+    expose:
+      - "3000"   # Only visible to containers on the same network
     environment:
       DOCKER_IMAGE: v2
     volumes:
