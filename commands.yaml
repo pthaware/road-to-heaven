@@ -1,0 +1,33 @@
+# YAML (YAML Ain't Markup Language) is a human-readable data serialization language used for storing and exchanging configuration data.
+# The main purpose of YAML is to provide a simple, human-readable way to write configuration data that both humans and programs can understand.
+
+
+# =========================================== Basic Structure of Yaml  ===========================================
+# 01. Key-Value Pair
+fname: Piyush
+lname: Thaware
+age: 26
+
+# 02. Lists (Arrays) --> Lists are represented using a hyphen (-).
+skills:
+  - Python
+  - Docker
+  - Kubernetes
+  - Jenkins
+
+# 03. Nested Objects --> Indentation is used to create nested structures.
+database:
+  host: localhost
+  port: 3306
+  username: root
+  password: admin
+
+# 04. List of Objects 
+employees:
+  - name: Alice
+    age: 28
+    role: Developer
+
+  - name: Bob
+    age: 32
+    role: DevOps Engineer
