@@ -14,6 +14,7 @@ pipeline {
                 echo "Cloning the app..."
 
                 git branch: 'Nodejs',
+                    credentialsId: 'github-creds',
                     url: 'https://github.com/PiyushThaware07/road-to-heaven.git'
             }
         }
