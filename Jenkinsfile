@@ -1,45 +1,82 @@
-// pipeline → Defines the entire Jenkins Pipeline.
 pipeline {
-
-    // agent → Specifies where the pipeline should run.
-    // any → Runs on any available Jenkins agent.
     agent any
 
-    // stages → Groups all the stages of the pipeline.
+    environment {
+        APP_NAME = 'node-app-01'
+        APP_PORT = '3001'
+        APP_VERSION = 'v1'
+    }
+
     stages {
 
-        // stage → Represents a logical phase of the pipeline.
-        stage("Build") {
-
-            // steps → Contains the commands to execute in this stage.
+        stage("Clone") {
             steps {
-                echo "Building project..."
+                echo "Cloning the app..."
+
+                git branch: 'Nodejs',
+                    url: 'https://github.com/PiyushThaware07/road-to-heaven.git'
             }
         }
 
-        stage("Test") {
+        stage("GDI") {
             steps {
-                echo "Performing unit and integration testing..."
+                echo "Generating the Docker image..."
+
+                sh '''
+                    docker compose build
+                    docker images
+                '''
+            }
+        }
+
+        stage("PDI") {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds',usernameVariable: 'DOCKER_USER',passwordVariable: 'DOCKER_PASS')]) {
+                    echo "Tagging Docker image..."
+                    sh '''
+                        docker tag ${APP_NAME}:${APP_VERSION} ${DOCKER_USER}/${APP_NAME}:${APP_VERSION}
+                        docker images
+                    '''
+
+                    echo "Logging into Docker Hub..."
+                    sh '''
+                        echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+                    '''
+
+                    echo "Pushing image..."
+                    sh '''
+                        docker push ${DOCKER_USER}/${APP_NAME}:${APP_VERSION}
+                    '''
+
+                    sh 'docker logout'
+                    echo "Image pushed successfully!"
+                }
+            }
+        }
+
+        stage("RDI") {
+            steps {
+                echo "Running the application..."
+
+                sh '''
+                    docker compose down || true
+                    docker compose up -d
+                '''
             }
         }
     }
 
-    // post → Defines actions that run after the pipeline finishes.
     post {
-
-        // always → Runs regardless of pipeline result (success, failure, aborted, etc.).
-        always {
-            echo "This step always executes, regardless of whether the pipeline succeeds or fails."
-        }
-
-        // success → Runs only if the pipeline completes successfully.
         success {
-            echo "This step executes only if the pipeline succeeds."
+            echo "Pipeline completed successfully."
         }
 
-        // failure → Runs only if the pipeline fails.
         failure {
-            echo "This step executes only if the pipeline fails."
+            echo "Pipeline failed."
+        }
+
+        always {
+            echo "Pipeline execution finished."
         }
     }
 }
