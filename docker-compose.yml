@@ -1,0 +1,10 @@
+services:
+  node-app:
+    build: .
+    container_name: ${APP_NAME}
+    ports:
+      - "${APP_PORT}:${APP_PORT}"
+    environment:
+      APP_PORT: ${APP_PORT}
+      APP_NAME: ${APP_NAME}
+    restart: unless-stopped
