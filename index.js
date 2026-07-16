@@ -7,6 +7,7 @@ const os = require("os");
 const app = express();
 const APP_PORT = process.env.APP_PORT || 3000;
 const APP_NAME = process.env.APP_NAME || "default";
+const APP_VERSION= process.env.APP_VERSION || "v0.0.0";
 
 // Middleware
 app.use(express.json());
@@ -18,6 +19,7 @@ app.get("/", (req, res) => {
     message: "Node.js Server is running",
     port: APP_PORT,
     appName: APP_NAME,
+    appVersion: APP_VERSION
   });
 });
 
