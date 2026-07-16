@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     environment {
-        APP_NAME = 'node-app-01'
-        APP_PORT = '3001'
-        APP_VERSION = 'v1'
+        APP_NAME = 'node-app-02'
+        APP_PORT = '3002'
+        APP_VERSION = 'v2'
     }
 
     stages {
