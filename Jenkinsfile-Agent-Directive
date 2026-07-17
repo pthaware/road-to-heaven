@@ -1,0 +1,85 @@
+pipeline {
+    agent {
+        label: "agent-label-01"
+    }
+
+    environment {
+        APP_NAME = 'node-app-01'
+        APP_PORT = '3001'
+        APP_VERSION = 'v1'
+    }
+
+    stages {
+
+        stage("Clone") {
+            steps {
+                echo "Cloning the app..."
+
+                git branch: 'Nodejs',
+                    credentialsId: 'github-creds',
+                    url: 'https://github.com/PiyushThaware07/road-to-heaven.git'
+            }
+        }
+
+        stage("GDI") {
+            steps {
+                echo "Generating the Docker image..."
+
+                sh '''
+                    docker compose build
+                    docker images
+                '''
+            }
+        }
+
+        stage("PDI") {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds',usernameVariable: 'DOCKER_USER',passwordVariable: 'DOCKER_PASS')]) {
+                    echo "Tagging Docker image..."
+                    sh '''
+                        docker tag ${APP_NAME}:${APP_VERSION} ${DOCKER_USER}/${APP_NAME}:${APP_VERSION}
+                        docker images
+                    '''
+
+                    echo "Logging into Docker Hub..."
+                    sh '''
+                        echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+                    '''
+
+                    echo "Pushing image..."
+                    sh '''
+                        docker push ${DOCKER_USER}/${APP_NAME}:${APP_VERSION}
+                    '''
+
+                    sh 'docker logout'
+                    echo "Image pushed successfully!"
+                }
+            }
+        }
+
+        stage("RDI") {
+            steps {
+                echo "Running the application..."
+
+                sh '''
+                    docker compose down || true
+                    docker compose up -d
+                '''
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "Pipeline completed successfully."
+        }
+
+        failure {
+            echo "Pipeline failed."
+        }
+
+        always {
+            echo "Pipeline execution finished."
+        }
+    }
+}
