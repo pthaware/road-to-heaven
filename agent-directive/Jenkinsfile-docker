@@ -11,12 +11,6 @@ pipelines {
             }
             steps{
                 echo "Building application inside Node container"
-                sh '''
-                    node --version
-                    npm --version
-                    npm install
-                    npm run build
-                '''
             }
         }
 
@@ -29,12 +23,6 @@ pipelines {
             }
             steps{
                 echo "Testing application inside test container"
-                sh '''
-                    node --version
-                    npm --version
-                    npm install
-                    npm test
-                '''
             }
         }
 
@@ -48,11 +36,6 @@ pipelines {
             }
             steps{
                 echo "Testing application inside test container"
-                sh '''
-                    docker --version
-                    echo "Deploy commands here"
-                    docker compose up -d
-                '''
             }
         }
     }
