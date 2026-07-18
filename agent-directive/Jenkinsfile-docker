@@ -1,5 +1,24 @@
+// Purpose : Jenkins runs the pipeline on an agent, clones the code, starts a temporary Node.js 18 container to validate/build the app, then builds the Docker image, pushes it to Docker Hub, and deploys the application.
+// Jenkins Master
+//     |
+//     +-- Clone code
+//     |
+//     +-- Node Build & Lint
+//             |
+//             +-- Temporary node:18 Docker container
+//             |       |
+//             |       +-- npm install
+//             |       +-- npm lint
+//             |       +-- npm build
+//             |
+//     +-- Docker Build Image
+//     |
+//     +-- Push Image
+//     |
+//     +-- Deploy
+
 pipeline {
-    agent none
+    agent any
 
     environment {
         APP_NAME = 'node-app-01'
