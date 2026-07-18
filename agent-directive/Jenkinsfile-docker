@@ -1,0 +1,20 @@
+pipelines{
+    agent none
+
+    stages{
+        stage("Node Build"){
+            agent {
+                docker {
+                    image 'node:18'
+                }
+            }
+            steps{
+                sh '''
+                    node --version
+                    npm install
+                    npm run build
+                '''
+            }
+        }
+    }
+}
