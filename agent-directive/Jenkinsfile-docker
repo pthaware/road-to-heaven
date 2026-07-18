@@ -1,126 +1,59 @@
-// Purpose : Jenkins runs the pipeline on an agent, clones the code, starts a temporary Node.js 18 container to validate/build the app, then builds the Docker image, pushes it to Docker Hub, and deploys the application.
-// Jenkins Master
-//     |
-//     +-- Clone code
-//     |
-//     +-- Node Build & Lint
-//             |
-//             +-- Temporary node:18 Docker container
-//             |       |
-//             |       +-- npm install
-//             |       +-- npm lint
-//             |       +-- npm build
-//             |
-//     +-- Docker Build Image
-//     |
-//     +-- Push Image
-//     |
-//     +-- Deploy
+pipelines {
+    agent none
 
-pipeline {
-    agent any
-
-    environment {
-        APP_NAME = 'node-app-01'
-        APP_PORT = '3001'
-        APP_VERSION = 'v1'
-    }
-
-    stages {
-
-        stage("Clone") {
-            steps {
-                echo "Cloning the app..."
-
-                git branch: 'Nodejs',
-                    credentialsId: 'github-creds',
-                    url: 'https://github.com/PiyushThaware07/road-to-heaven.git'
-            }
-        }
-
-        stage("Node Build & Lint"){
-            agent {
+    stages{
+        // Building nodejs application inside NodeJs Build container - 01
+        stage("Build"){
+            agent{
                 docker {
-                    image 'node:18'
+                    image "node:18"
                 }
             }
-            steps {
-                echo "Running Node.js validation..."
+            steps{
+                echo "Building application inside Node container"
                 sh '''
                     node --version
                     npm --version
                     npm install
-                    npm run lint || true
                     npm run build
-                    ls -la
                 '''
             }
         }
 
-        stage("GDI") {
-            steps {
-                echo "Generating the Docker image..."
-
-                sh '''
-                    docker compose build
-                    docker images
-                '''
-            }
-        }
-
-        stage("PDI") {
-            steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds',usernameVariable: 'DOCKER_USER',passwordVariable: 'DOCKER_PASS')]) {
-                    echo "Tagging Docker image..."
-                    sh '''
-                        docker tag ${APP_NAME}:${APP_VERSION} ${DOCKER_USER}/${APP_NAME}:${APP_VERSION}
-                        docker images
-                    '''
-
-                    echo "Logging into Docker Hub..."
-                    sh '''
-                        echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-                    '''
-
-                    echo "Pushing image..."
-                    sh '''
-                        docker push ${DOCKER_USER}/${APP_NAME}:${APP_VERSION}
-                    '''
-
-                    sh 'docker logout'
-                    echo "Image pushed successfully!"
+        // Testing nodejs application inside NodeJs Test container - 02
+        stage("Test"){
+            agent{
+                docker {
+                    image "node:18-alpine"
                 }
             }
+            steps{
+                echo "Testing application inside test container"
+                sh '''
+                    node --version
+                    npm --version
+                    npm install
+                    npm test
+                '''
+            }
         }
 
-        stage("RDI") {
-            steps {
-                echo "Running the application..."
 
+        // Deploying nodejs application inside NodeJs deploy container - 03
+        stage("Deploy"){
+            agent{
+                docker {
+                    image "docker:latest"
+                }
+            }
+            steps{
+                echo "Testing application inside test container"
                 sh '''
-                    docker compose down || true
+                    docker --version
+                    echo "Deploy commands here"
                     docker compose up -d
                 '''
             }
-        }
-    }
-
-    post {
-        success {
-            echo "Pipeline completed successfully."
-        }
-
-        failure {
-            echo "Pipeline failed. Cleaning Docker resources..."
-            sh '''
-                docker compose down || true
-                docker system prune -af --volumes
-            '''
-            echo "Cleanup completed."
-        }
-
-        always {
-            echo "Pipeline execution finished."
         }
     }
 }
