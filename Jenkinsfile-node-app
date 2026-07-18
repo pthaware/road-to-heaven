@@ -24,8 +24,8 @@ pipeline {
                 echo "Generating the Docker image..."
 
                 sh '''
-                    sudo docker compose build
-                    sudo docker images
+                    docker compose build
+                    docker images
                 '''
             }
         }
@@ -35,21 +35,21 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-creds',usernameVariable: 'DOCKER_USER',passwordVariable: 'DOCKER_PASS')]) {
                     echo "Tagging Docker image..."
                     sh '''
-                        sudo docker tag ${APP_NAME}:${APP_VERSION} ${DOCKER_USER}/${APP_NAME}:${APP_VERSION}
-                        sudo docker images
+                        docker tag ${APP_NAME}:${APP_VERSION} ${DOCKER_USER}/${APP_NAME}:${APP_VERSION}
+                        docker images
                     '''
 
                     echo "Logging into Docker Hub..."
                     sh '''
-                        echo "$DOCKER_PASS" | sudo docker login -u "$DOCKER_USER" --password-stdin
+                        echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
                     '''
 
                     echo "Pushing image..."
                     sh '''
-                        sudo docker push ${DOCKER_USER}/${APP_NAME}:${APP_VERSION}
+                        docker push ${DOCKER_USER}/${APP_NAME}:${APP_VERSION}
                     '''
 
-                    sh 'sudo docker logout'
+                    sh 'docker logout'
                     echo "Image pushed successfully!"
                 }
             }
@@ -60,8 +60,8 @@ pipeline {
                 echo "Running the application..."
 
                 sh '''
-                    sudo docker compose down || true
-                    sudo docker compose up -d
+                    docker compose down || true
+                    docker compose up -d
                 '''
             }
         }
