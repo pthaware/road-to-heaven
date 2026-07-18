@@ -4,45 +4,58 @@
 //                 |
 //                 └── Mounts Jenkins workspace
 //                 |
-//                 └── Runs steps
+//                 └── Clone Node.js application
+//                 |
+//                 └── npm install + npm build
 //                 |
 //                 └── Container destroyed
+//
+//         Workspace remains
 
 
 // Stage 2: Test
 //         |
 //         └── Creates Docker container node:18-alpine
 //                 |
-//                 └── Mounts workspace
+//                 └── Mounts same Jenkins workspace
 //                 |
-//                 └── Runs steps
+//                 └── Runs tests
 //                 |
 //                 └── Container destroyed
+//
+//         Workspace remains
 
 
 // Stage 3: Deploy
 //         |
 //         └── Creates Docker container docker:latest
 //                 |
-//                 └── Mounts workspace
+//                 └── Mounts same Jenkins workspace
 //                 |
-//                 └── Runs steps
+//                 └── Deploy application
 //                 |
 //                 └── Container destroyed
 
+
 pipeline {
+
     agent none
 
-    stages{
-        // Building nodejs application inside NodeJs Build container - 01
-        stage("Build"){
-            agent{
+    stages {
+
+        // Build Node.js application
+        stage("Build") {
+
+            agent {
                 docker {
                     image "node:18"
                 }
             }
-            steps{
+
+            steps {
+
                 echo "===== Building application inside Node container ====="
+
                 sh '''
                     echo "Container Hostname:"
                     hostname
@@ -50,21 +63,39 @@ pipeline {
                     echo "Workspace:"
                     pwd
 
-                    echo "Workspace Files:"
+                    echo "Cloning application..."
+
+                    git clone https://github.com/your-user/your-node-app.git .
+
+                    echo "Installing dependencies..."
+
+                    npm install
+
+                    echo "Building application..."
+
+                    npm run build
+
+
+                    echo "Workspace after build:"
                     ls -la
                 '''
             }
         }
 
-        // Testing nodejs application inside NodeJs Test container - 02
-        stage("Test"){
-            agent{
+
+        // Test Node.js application
+        stage("Test") {
+
+            agent {
                 docker {
                     image "node:18-alpine"
                 }
             }
-            steps{
-                echo "===== Testing application inside test container ====="
+
+            steps {
+
+                echo "===== Testing application inside Node test container ====="
+
                 sh '''
                     echo "Container Hostname:"
                     hostname
@@ -72,22 +103,34 @@ pipeline {
                     echo "Workspace:"
                     pwd
 
-                    echo "Workspace Files:"
+                    echo "Checking existing files from Build stage:"
                     ls -la
+
+                    echo "Installing dependencies..."
+
+                    npm install
+
+                    echo "Running tests..."
+
+                    npm test
                 '''
             }
         }
 
 
-        // Deploying nodejs application inside NodeJs deploy container - 03
-        stage("Deploy"){
-            agent{
+        // Deploy application
+        stage("Deploy") {
+
+            agent {
                 docker {
                     image "docker:latest"
                 }
             }
-            steps{
-                echo "===== Deploying application inside test container ====="
+
+            steps {
+
+                echo "===== Deploying application inside Docker container ====="
+
                 sh '''
                     echo "Container Hostname:"
                     hostname
@@ -95,8 +138,17 @@ pipeline {
                     echo "Workspace:"
                     pwd
 
-                    echo "Workspace Files:"
+                    echo "Checking application files:"
                     ls -la
+
+                    echo "Deploying application..."
+
+                    docker --version
+
+                    # Example deployment command
+                    # docker build -t my-node-app .
+
+                    echo "Deployment completed"
                 '''
             }
         }
