@@ -4,7 +4,7 @@
 //                 |
 //                 └── Mounts Jenkins workspace
 //                 |
-//                 └── Clone Node.js application
+//                 └── Checkout Node.js application
 //                 |
 //                 └── npm install + npm build
 //                 |
@@ -56,6 +56,11 @@ pipeline {
 
                 echo "===== Building application inside Node container ====="
 
+                // Checkout code into Jenkins workspace
+                git branch: 'Nodejs',
+                    credentialsId: 'github-creds',
+                    url: 'https://github.com/PiyushThaware07/road-to-heaven.git'
+
                 sh '''
                     echo "Container Hostname:"
                     hostname
@@ -63,9 +68,8 @@ pipeline {
                     echo "Workspace:"
                     pwd
 
-                    echo "Cloning application..."
-
-                    git clone https://github.com/your-user/your-node-app.git .
+                    echo "Workspace Files After Checkout:"
+                    ls -la
 
                     echo "Installing dependencies..."
 
@@ -74,7 +78,6 @@ pipeline {
                     echo "Building application..."
 
                     npm run build
-
 
                     echo "Workspace after build:"
                     ls -la
@@ -103,7 +106,7 @@ pipeline {
                     echo "Workspace:"
                     pwd
 
-                    echo "Checking existing files from Build stage:"
+                    echo "Checking files from Build stage:"
                     ls -la
 
                     echo "Installing dependencies..."
@@ -141,12 +144,12 @@ pipeline {
                     echo "Checking application files:"
                     ls -la
 
-                    echo "Deploying application..."
-
+                    echo "Docker version:"
                     docker --version
 
-                    # Example deployment command
-                    # docker build -t my-node-app .
+                    echo "Building Docker image..."
+
+                    # docker build -t road-to-heaven-app .
 
                     echo "Deployment completed"
                 '''
