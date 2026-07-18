@@ -8,6 +8,16 @@ pipeline {
     }
 
     stages {
+        
+        stage("Who is running Jenkins") {
+            steps {
+                wrap([$class: 'BuildUser']) {
+                    echo "Build triggered by: ${BUILD_USER}"
+                    echo "User ID: ${BUILD_USER_ID}"
+                    echo "User Email: ${BUILD_USER_EMAIL}"
+                }
+            }
+        }
 
         stage("Clone") {
             steps {
