@@ -73,7 +73,12 @@ pipeline {
         }
 
         failure {
-            echo "Pipeline failed."
+            echo "Pipeline failed. Cleaning Docker resources..."
+            sh '''
+                docker compose down || true
+                docker system prune -af --volumes
+            '''
+            echo "Cleanup completed."
         }
 
         always {
