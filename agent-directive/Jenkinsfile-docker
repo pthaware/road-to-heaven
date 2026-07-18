@@ -1,3 +1,35 @@
+// Stage 1: Build
+//         |
+//         └── Creates Docker container node:18
+//                 |
+//                 └── Mounts Jenkins workspace
+//                 |
+//                 └── Runs steps
+//                 |
+//                 └── Container destroyed
+
+
+// Stage 2: Test
+//         |
+//         └── Creates Docker container node:18-alpine
+//                 |
+//                 └── Mounts workspace
+//                 |
+//                 └── Runs steps
+//                 |
+//                 └── Container destroyed
+
+
+// Stage 3: Deploy
+//         |
+//         └── Creates Docker container docker:latest
+//                 |
+//                 └── Mounts workspace
+//                 |
+//                 └── Runs steps
+//                 |
+//                 └── Container destroyed
+
 pipeline {
     agent none
 
@@ -10,7 +42,17 @@ pipeline {
                 }
             }
             steps{
-                echo "Building application inside Node container"
+                echo "===== Building application inside Node container ====="
+                sh '''
+                    echo "Container Hostname:"
+                    hostname
+
+                    echo "Workspace:"
+                    pwd
+
+                    echo "Workspace Files:"
+                    ls -la
+                '''
             }
         }
 
@@ -22,7 +64,17 @@ pipeline {
                 }
             }
             steps{
-                echo "Testing application inside test container"
+                echo "===== Testing application inside test container ====="
+                sh '''
+                    echo "Container Hostname:"
+                    hostname
+
+                    echo "Workspace:"
+                    pwd
+
+                    echo "Workspace Files:"
+                    ls -la
+                '''
             }
         }
 
@@ -35,7 +87,17 @@ pipeline {
                 }
             }
             steps{
-                echo "Testing application inside test container"
+                echo "===== Deploying application inside test container ====="
+                sh '''
+                    echo "Container Hostname:"
+                    hostname
+
+                    echo "Workspace:"
+                    pwd
+
+                    echo "Workspace Files:"
+                    ls -la
+                '''
             }
         }
     }
