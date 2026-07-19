@@ -1,0 +1,45 @@
+pipeline {
+    agent none
+    
+    options {
+        preserveStashes(buildCount: 100)
+    }
+    
+    stages{
+        stage("Build"){
+            agent {
+                label "build-agent"
+            }
+            steps{
+                echo "Building application..."
+                sh '''
+                    curl -o products.json https://fakestoreapi.com/products
+                    tar -czvf products.tar.gz products.json
+                    ls -lh
+                '''
+                stash name: 'products-package', includes: 'products.tar.gz'
+            }
+        }
+        stage("Deploy"){
+            agent {
+                label "deploy-agent"
+            }
+        
+            steps{
+                echo "Deploying application..."
+                unstash 'products-package'
+                sh '''
+                    ls -lh
+
+                    echo "Checking package contents..."
+                    tar -tzvf products.tar.gz
+
+                    echo "Extracting package..."
+                    tar -xzvf products.tar.gz
+
+                    ls -lh
+                '''
+            }
+        }
+    }
+}
