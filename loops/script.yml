@@ -1,0 +1,25 @@
+---
+- name: Setup Server Environment
+  hosts: servers
+  become: yes
+
+  vars:
+    packages_to_install:
+      - nginx
+      - docker.io
+      - jq
+
+  tasks:
+
+    # Print package name before installing
+    - name: Print package name before installing
+      debug:
+        msg: "Installing package {{ item }}"
+      loop: "{{ packages_to_install }}"
+
+    # Install packages one by one using a loop
+    - name: Install package
+      package:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ packages_to_install }}"

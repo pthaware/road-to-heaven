@@ -1,0 +1,50 @@
+---
+- name: Setup Server Environment
+  hosts: servers
+  become: yes
+  gather_facts: yes
+
+  vars:
+    debian_packages:
+      - nginx
+      - docker.io
+      - unzip
+      - htop
+      - tree
+
+    redhat_packages:
+      - nginx
+      - docker
+      - git
+      - curl
+      - wget
+      - jq
+      - vim
+
+  tasks:
+
+    - name: Print Debian package name
+      debug:
+        msg: "Installing package {{ item }}"
+      loop: "{{ debian_packages }}"
+      when: ansible_facts["os_family"] == "Debian"
+
+    - name: Install Debian packages
+      package:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ debian_packages }}"
+      when: ansible_facts["os_family"] == "Debian"
+
+    - name: Print RedHat package name
+      debug:
+        msg: "Installing package {{ item }}"
+      loop: "{{ redhat_packages }}"
+      when: ansible_facts["os_family"] == "RedHat"
+
+    - name: Install RedHat packages
+      package:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ redhat_packages }}"
+      when: ansible_facts["os_family"] == "RedHat"

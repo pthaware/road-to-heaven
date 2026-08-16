@@ -1,0 +1,16 @@
+---
+- name: Install Nginx Playbook
+  hosts: servers
+  become: yes
+  gather_facts: yes  # yes/no to gather the facts or not
+
+  tasks:
+    - name: Install nginx (webserver)
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+    - name: Show OS
+      debug:
+        msg: "The OS is {{ ansible_distribution }}" # accesing gathered facts
