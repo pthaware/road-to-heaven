@@ -1,83 +1,51 @@
-pipeline {
-    agent any
+@Library("Shared") _
 
-    environment {
-        APP_NAME = 'node-app-01'
-        APP_PORT = '3001'
-        APP_VERSION = 'v1'
+pipeline {
+    agent {
+        label "piyush"
     }
 
     stages {
 
-        stage("Clone") {
+        stage("Fetch the code") {
             steps {
-                echo "Cloning the app..."
-
-                git branch: 'Nodejs',
-                    credentialsId: 'github-creds',
-                    url: 'https://github.com/PiyushThaware07/road-to-heaven.git'
-            }
-        }
-
-        stage("GDI") {
-            steps {
-                echo "Generating the Docker image..."
-
-                sh '''
-                    docker compose build
-                    docker images
-                '''
-            }
-        }
-
-        stage("PDI") {
-            steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds',usernameVariable: 'DOCKER_USER',passwordVariable: 'DOCKER_PASS')]) {
-                    echo "Tagging Docker image..."
-                    sh '''
-                        docker tag ${APP_NAME}:${APP_VERSION} ${DOCKER_USER}/${APP_NAME}:${APP_VERSION}
-                        docker images
-                    '''
-
-                    echo "Logging into Docker Hub..."
-                    sh '''
-                        echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-                    '''
-
-                    echo "Pushing image..."
-                    sh '''
-                        docker push ${DOCKER_USER}/${APP_NAME}:${APP_VERSION}
-                    '''
-
-                    sh 'docker logout'
-                    echo "Image pushed successfully!"
+                script {
+                    clone(
+                        "https://github.com/ankugomkar13/road-to-heaven.git",
+                        "Nodejs"
+                    )
                 }
             }
         }
 
-        stage("RDI") {
+        stage("Build") {
             steps {
-                echo "Running the application..."
-
-                sh '''
-                    docker compose down || true
-                    docker compose up -d
-                '''
+                script {
+                    docker_build("notes-app", "latest")
+                }
             }
         }
-    }
 
-    post {
-        success {
-            echo "Pipeline completed successfully."
+        stage("Push image to Docker Hub") {
+            steps {
+                script {
+                    docker_push("notes-app", "latest", "ankita133")
+                }
+            }
         }
 
-        failure {
-            echo "Pipeline failed."
-        }
+        stage("Deploy") {
+            steps {
+                echo "Deploy the code"
 
-        always {
-            echo "Pipeline execution finished."
+                sh '''
+                    docker rm -f notes-app || true
+                    docker run -d \
+                        --name notes-app \
+                        -p 3001:3001 \
+                        notes-app:latest
+                '''
+            }
         }
     }
 }
