@@ -26,7 +26,7 @@ pipeline {
             }
         }
 
-        stage("Push image to Docker Hub") {
+        stage("Push image to Docker Hub new ") {
             steps {
                 script {
                     docker_push("notes-app", "latest", "ankita133")
