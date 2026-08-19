@@ -1,0 +1,12 @@
+services:
+  node-app:
+    build: .
+    image: ${APP_NAME}:${APP_VERSION}
+    container_name: ${APP_NAME}-${APP_VERSION}
+    ports:
+      - "${APP_PORT}:${APP_PORT}"
+    environment:
+      APP_PORT: ${APP_PORT}
+      APP_NAME: ${APP_NAME}
+      APP_VERSION: ${APP_VERSION}
+    restart: unless-stopped
