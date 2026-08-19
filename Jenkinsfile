@@ -7,7 +7,7 @@ pipeline {
 
     stages {
 
-        stage("Fetch the code") {
+        stage("Fetch the code from github") {
             steps {
                 script {
                     clone(
