@@ -36,7 +36,7 @@ pipeline {
 
         stage("Deploy") {
             steps {
-                echo "Deploy the code"
+                echo "Deploy the code using docker only"
 
                 sh '''
                     docker rm -f notes-app || true
